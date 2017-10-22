@@ -35,7 +35,7 @@ function setUserInfo(request) {
         firstName: request.profile.firstName,
         lastName: request.profile.lastName,
         email: request.email,
-       role: request.role
+        role: request.role
     }
 }
 
@@ -90,7 +90,11 @@ exports.register = function(req, res, next) {
         let user = new User({
             email: email,
             password: password,
-            profile: { firstName: firstName, lastName: lastName }
+            profile: {
+                firstName: firstName,
+                lastName: lastName,
+                email: email
+            }
         });
 
         user.save(function(err, user) {

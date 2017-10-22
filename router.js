@@ -48,7 +48,7 @@ module.exports = function(app) {
 
     admRoutes.get('/post/:postId', PostController.getPost);
 
-    admRoutes.patch('/post/:postId', PostController.editPost);
+    admRoutes.put('/post/:postId', PostController.editPost);
 
     admRoutes.delete('/post/:postId', PostController.delPost);
 

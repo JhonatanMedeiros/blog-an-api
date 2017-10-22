@@ -51,7 +51,7 @@ exports.editPost = function(req, res) {
 
 exports.delPost = function(req, res) {
 
-    Post.remove({
+    Post.findOneAndDelete({
         _id: req.params.postId
     }, function(err, post) {
 
