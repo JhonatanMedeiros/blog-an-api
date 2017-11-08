@@ -12,4 +12,4 @@ pipelines:
           - node
         script: # Modify the commands below to build your repository.
           - npm install
-          - git push https://git.heroku.com/blog-an-api.git HEAD
+          - git push https://heroku:85dcead2-928e-4ae0-9a64-d727079bb2a1@git.heroku.com/blog-an-api.git HEAD
