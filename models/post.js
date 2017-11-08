@@ -16,10 +16,12 @@ var PostSchema = new Schema({
       type: String
     },
     author: {
-        type: String
+        type: String,
+        required: 'Digite o Author'
     },
     authorId: {
-        type: Number
+        type: String,
+        required: 'Digite o Id do Author'
     },
     Created_date: {
         type: Date,

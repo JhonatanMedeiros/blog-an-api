@@ -18,8 +18,9 @@ const UserSchema = new Schema({
             required: true
         },
         profile: {
-            firstName: { type: String },
-            lastName: { type: String }
+            firstName:  { type: String },
+            lastName:   { type: String },
+            email:      { type: String }
         },
         role: {
             type: String,
