@@ -33,6 +33,9 @@ module.exports = function(app) {
     // Login route
     authRoutes.post('/login', AuthenticationController.login);
 
+    // Token route
+    authRoutes.get('/o/token', AuthenticationController.token);
+
     //Profile
     authRoutes.get('/me', requireAuth, AuthenticationController.userMe);
 
