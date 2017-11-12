@@ -44,12 +44,52 @@ function setUserInfo(request) {
 //========================================
 exports.login = function(req, res, next) {
 
-    let userInfo = setUserInfo(req.user);
+    // Check for registration errors
+    const email = req.body.email;
+    const password = req.body.password;
 
-    res.status(200).json({
-        token: generateToken(userInfo),
-        user: userInfo
+    // Return error if no email provided
+    if (!email) {
+        return res.status(422).send({ error: 'You must enter an email address.'});
+    }
+
+    // Return error if no password provided
+    if (!password) {
+        return res.status(422).send({ error: 'You must enter a password.' });
+    }
+
+    User.findOne({ email: email }, function(err, user) {
+
+        if (err) {
+            return res.status(422).send(err)
+        }
+
+        if(!user) {
+            return res.status(422).send({ error: 'This email does not exist.' })
+        }
+
+        user.comparePassword(password, function(err, isMatch) {
+
+            if (err) {
+                return res.status(422).send(err);
+            }
+
+            if (!isMatch) {
+                return res.status(422).send({ error: 'The password does not match.' });
+            }
+
+
+            let userInfo = setUserInfo(user);
+
+            return res.status(201).json({
+                token: generateToken(userInfo),
+                user: userInfo
+            });
+        });
     });
+
+
+
 }
 
 
@@ -108,7 +148,7 @@ exports.register = function(req, res, next) {
             let userInfo = setUserInfo(user);
 
             res.status(201).json({
-                token: 'JWT ' + generateToken(userInfo),
+                token: generateToken(userInfo),
                 user: userInfo
             });
         });
