@@ -34,13 +34,13 @@ module.exports = function(app) {
     authRoutes.post('/login', requireLogin, AuthenticationController.login);
 
     //Profile
-    authRoutes.get('/me', AuthenticationController.userMe);
+    authRoutes.get('/me', requireAuth, AuthenticationController.userMe);
 
     //=========================
     // Adm Routes
     //=========================
 
-    apiRoutes.use('/adm', admRoutes);
+    apiRoutes.use('/adm', requireAuth, admRoutes);
 
     admRoutes.get('/posts', PostController.getPosts);
 
