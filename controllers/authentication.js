@@ -31,12 +31,12 @@ exports.login = function(req, res, next) {
 
     // Return error if no email provided
     if (!email) {
-        return res.status(422).send({ error: 'You must enter an email address.'});
+        return res.status(422).send({ error: 'Digite seu Email.'});
     }
 
     // Return error if no password provided
     if (!password) {
-        return res.status(422).send({ error: 'You must enter a password.' });
+        return res.status(422).send({ error: 'Digite sua senha.' });
     }
 
     User.findOne({ email: email }, function(err, user) {
@@ -46,7 +46,7 @@ exports.login = function(req, res, next) {
         }
 
         if(!user) {
-            return res.status(422).send({ error: 'This email does not exist.' })
+            return res.status(422).send({ error: 'Esse email não existe.' })
         }
 
         user.comparePassword(password, function(err, isMatch) {
@@ -56,7 +56,7 @@ exports.login = function(req, res, next) {
             }
 
             if (!isMatch) {
-                return res.status(422).send({ error: 'The password does not match.' });
+                return res.status(422).send({ error: 'A senha está incorreta.' });
             }
 
 
