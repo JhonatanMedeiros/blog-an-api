@@ -31,7 +31,7 @@ module.exports = function(app) {
     authRoutes.post('/register', AuthenticationController.register);
 
     // Login route
-    authRoutes.post('/login', requireLogin, AuthenticationController.login);
+    authRoutes.post('/login', AuthenticationController.login);
 
     //Profile
     authRoutes.get('/me', requireAuth, AuthenticationController.userMe);
@@ -40,17 +40,17 @@ module.exports = function(app) {
     // Adm Routes
     //=========================
 
-    apiRoutes.use('/adm', requireAuth, admRoutes);
+    apiRoutes.use('/adm', admRoutes);
 
-    admRoutes.get('/posts', PostController.getPosts);
+    admRoutes.get('/posts', requireAuth, PostController.getPosts);
 
-    admRoutes.post('/post', PostController.createPost);
+    admRoutes.post('/post', requireAuth, PostController.createPost);
 
-    admRoutes.get('/post/:postId', PostController.getPost);
+    admRoutes.get('/post/:postId', requireAuth, PostController.getPost);
 
-    admRoutes.put('/post/:postId', PostController.editPost);
+    admRoutes.put('/post/:postId', requireAuth, PostController.editPost);
 
-    admRoutes.delete('/post/:postId', PostController.delPost);
+    admRoutes.delete('/post/:postId', requireAuth, PostController.delPost);
 
 
 
