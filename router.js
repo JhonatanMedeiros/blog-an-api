@@ -54,6 +54,12 @@ module.exports = function(app) {
 
 
 
+    app.get('/api', function (req, res, next) {
+
+        res.status(200).send('API works!');
+        
+    });
+
     // Set url for API group routes
     app.use('/api', apiRoutes);
 };
