@@ -1,14 +1,14 @@
 'use strict';
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 
-var CategorySchema = new Schema({
-    name: {
-        type: String,
-        required: 'Digite o nome da Categoria'
+const CategorySchema = new Schema({
+        name: {
+            type: String,
+            required: 'Digite o nome da Categoria'
+        },
     },
-},
     {
         timestamps: true
     });

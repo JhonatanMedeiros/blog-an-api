@@ -1,12 +1,14 @@
 // Importing Node modules and initializing Express
-const express = require('express'),
-    app = express(),
-    bodyParser = require('body-parser'),
-    logger = require('morgan'),
-    mongoose = require('mongoose'),
-    config = require('./config/main');
+const express = require('express');
+const bodyParser = require('body-parser');
+const logger = require('morgan');
+const mongoose = require('mongoose');
 
-const router = require('./router');
+const app = express();
+
+const config = require('./config/main');
+
+const router = require('./router/router');
 
 mongoose.Promise = require('bluebird');
 // Database Connection

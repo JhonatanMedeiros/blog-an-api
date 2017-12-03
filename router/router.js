@@ -1,25 +1,29 @@
-const AuthenticationController = require('./controllers/authentication'),
-    PostController = require('./controllers/post'),
-    CategoryController = require('./controllers/category'),
-    express = require('express'),
-    passportService = require('./config/passport'),
-    passport = require('passport');
+const passport = require('passport');
+const express = require('express');
+
+const passportService = require('../config/passport');
+
+const AuthenticationController = require('../controllers/authentication');
+const PostController = require('../controllers/post');
+const CategoryController = require('../controllers/category');
+
 
 // Middleware to require login/auth
 const requireAuth = passport.authenticate('jwt', { session: false });
 const requireLogin = passport.authenticate('local', { session: false });
 
 // Constants for role types
-const REQUIRE_ADMIN = "Admin",
-    REQUIRE_OWNER = "Owner",
-    REQUIRE_CLIENT = "Client",
-    REQUIRE_MEMBER = "Member";
+const REQUIRE_ADMIN = 'Admin';
+const REQUIRE_OWNER = 'Owner';
+const REQUIRE_CLIENT = 'Client';
+const REQUIRE_MEMBER = 'Member';
 
 module.exports = function(app) {
+
     // Initializing route groups
-    const apiRoutes = express.Router(),
-        authRoutes = express.Router(),
-        admRoutes = express.Router();
+    const apiRoutes = express.Router();
+    const authRoutes = express.Router();
+    const admRoutes = express.Router();
 
     //=========================
     // Auth Routes

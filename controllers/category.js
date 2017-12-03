@@ -1,7 +1,4 @@
-const jwt = require('jsonwebtoken'),
-    crypto = require('crypto'),
-    Category = require('../models/category'),
-    config = require('../config/main');
+const Category = require('../models/category');
 
 
 exports.getCategories = function (req, res, next) {

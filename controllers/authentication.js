@@ -1,12 +1,12 @@
-const jwt = require('jsonwebtoken'),
-    crypto = require('crypto'),
-    User = require('../models/user'),
-    config = require('../config/main');
+const jwt = require('jsonwebtoken');
+
+const config = require('../config/main');
+
+const User = require('../models/user');
+
 
 function generateToken(user) {
-    return jwt.sign(user, config.secret, {
-        expiresIn: 10080 // in seconds
-    });
+    return jwt.sign(user, config.secret);
 }
 
 // Set user info from request

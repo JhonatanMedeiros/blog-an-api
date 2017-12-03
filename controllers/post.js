@@ -1,7 +1,4 @@
-const jwt = require('jsonwebtoken'),
-    crypto = require('crypto'),
-    Post = require('../models/post'),
-    config = require('../config/main');
+const Post = require('../models/post');
 
 
 exports.getPosts = function (req, res, next) {
