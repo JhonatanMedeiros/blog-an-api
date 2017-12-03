@@ -8,8 +8,9 @@ const express = require('express'),
 
 const router = require('./router');
 
+mongoose.Promise = require('bluebird');
 // Database Connection
-mongoose.connect(config.database);
+mongoose.connect(config.database, { useMongoClient: true });
 
 
 // Start the server
@@ -25,7 +26,7 @@ app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials");
     res.header("Access-Control-Allow-Credentials", "true");
-    // res.header("Content-Type", "application/json");
+    res.header("Content-Type", "application/json");
     next();
 });
 

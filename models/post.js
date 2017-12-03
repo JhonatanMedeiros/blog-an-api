@@ -2,12 +2,19 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+const Category = require('../models/post');
+
 
 var PostSchema = new Schema({
     title: {
         type: String,
         required: 'Digite o titulo da postagem'
     },
+    titleUrl: {
+        type: String,
+        required: 'Digite o titulo da URL da postagem'
+    },
+    category: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
     content: {
         type: String,
         required: 'Digite o conteudo da postagem'
@@ -23,10 +30,9 @@ var PostSchema = new Schema({
         type: String,
         required: 'Digite o Id do Author'
     },
-    Created_date: {
-        type: Date,
-        default: Date.now
-    }
-});
+    },
+    {
+        timestamps: true
+    });
 
 module.exports = mongoose.model('Post', PostSchema);

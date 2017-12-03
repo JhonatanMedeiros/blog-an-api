@@ -1,5 +1,6 @@
 const AuthenticationController = require('./controllers/authentication'),
     PostController = require('./controllers/post'),
+    CategoryController = require('./controllers/category'),
     express = require('express'),
     passportService = require('./config/passport'),
     passport = require('passport');
@@ -45,15 +46,35 @@ module.exports = function(app) {
 
     apiRoutes.use('/adm', admRoutes);
 
+
+    /* Post Routes */
+
     admRoutes.get('/posts', requireAuth, PostController.getPosts);
 
-    admRoutes.post('/post', requireAuth, PostController.createPost);
-
     admRoutes.get('/post/:postId', requireAuth, PostController.getPost);
+
+    admRoutes.post('/post', requireAuth, PostController.createPost);
 
     admRoutes.put('/post/:postId', requireAuth, PostController.editPost);
 
     admRoutes.delete('/post/:postId', requireAuth, PostController.delPost);
+
+    /* END Post Routes */
+
+
+    /* Category Routes */
+
+    admRoutes.get('/categories', requireAuth, CategoryController.getCategories);
+
+    admRoutes.get('/category/:categoryId', requireAuth, CategoryController.getCategory);
+
+    admRoutes.post('/category', requireAuth, CategoryController.createCategory);
+
+    admRoutes.put('/category/:categoryId', requireAuth, CategoryController.editCategory);
+
+    admRoutes.delete('/category/:categoryId', requireAuth, CategoryController.deleteCategory);
+
+    /* END Category Routes */
 
 
 
