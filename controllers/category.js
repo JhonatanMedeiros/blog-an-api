@@ -64,7 +64,7 @@ exports.editCategory = function(req, res) {
 
     Category.findOneAndUpdate({ _id: req.params.categoryId },
         req.body,{
-            new: true
+            new: false
         },
         function(err, category) {
             if (err) {

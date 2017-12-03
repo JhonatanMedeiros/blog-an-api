@@ -88,7 +88,7 @@ exports.editPost = function(req, res) {
 
     Post.findOneAndUpdate({ _id: req.params.postId },
         req.body, {
-            new: true
+            new: false
         },
         function(err, post) {
         if (err) {

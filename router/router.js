@@ -4,13 +4,13 @@ const express = require('express');
 const passportService = require('../config/passport');
 
 const AuthenticationController = require('../controllers/authentication');
+const ProfileController = require('../controllers/profile');
 const PostController = require('../controllers/post');
 const CategoryController = require('../controllers/category');
 
 
 // Middleware to require login/auth
 const requireAuth = passport.authenticate('jwt', { session: false });
-const requireLogin = passport.authenticate('local', { session: false });
 
 // Constants for role types
 const REQUIRE_ADMIN = 'Admin';
@@ -24,6 +24,7 @@ module.exports = function(app) {
     const apiRoutes = express.Router();
     const authRoutes = express.Router();
     const admRoutes = express.Router();
+    const profileRoutes = express.Router();
 
     //=========================
     // Auth Routes
@@ -38,11 +39,20 @@ module.exports = function(app) {
     // Login route
     authRoutes.post('/login', AuthenticationController.login);
 
-    // Token route
-    authRoutes.get('/o/token', AuthenticationController.token);
 
-    //Profile
-    authRoutes.get('/me', requireAuth, AuthenticationController.userMe);
+    //=========================
+    // Profile Routes
+    //=========================
+
+    apiRoutes.use('/profile', profileRoutes);
+
+
+    // Get Profile Info
+    profileRoutes.get('/me', requireAuth, ProfileController.userMe);
+
+    profileRoutes.put('/me', requireAuth, ProfileController.editMe);
+
+
 
     //=========================
     // Adm Routes
