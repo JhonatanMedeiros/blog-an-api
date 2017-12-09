@@ -8,6 +8,7 @@ const CategorySchema = new Schema({
             type: String,
             required: 'Digite o nome da Categoria'
         },
+        posts:[{ type: Schema.Types.ObjectId, ref: 'Post' }]
     },
     {
         timestamps: true

@@ -3,9 +3,7 @@ const User = require('../models/user');
 
 exports.userMe = function (req, res, next) {
 
-    const token = req.body.token;
-
-    User.findOne({ token: token }, function(err, user) {
+    User.findOne({ _id: req.params.userId }, function(err, user) {
 
         if (err) return res.status(500).send("There was a problem finding the user.");
         if (!user) return res.status(404).send("No user found.");

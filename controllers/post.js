@@ -84,6 +84,18 @@ exports.getPost = function(req, res) {
 };
 
 
+exports.getPostURL = function(req, res) {
+
+    Post.findOne({ titleUrl: req.params.postUrl }, function(err, post) {
+        if (err) {
+            res.send(err);
+        }else {
+            res.json(post);
+        }
+    });
+};
+
+
 exports.editPost = function(req, res) {
 
     Post.findOneAndUpdate({ _id: req.params.postId },

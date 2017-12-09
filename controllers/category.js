@@ -49,14 +49,16 @@ exports.createCategory = function(req, res) {
 
 exports.getCategory = function(req, res) {
 
-    Category.findById(req.params.categoryId, function(err, category) {
+    Category.findById(req.params.categoryId)
+        .populate('post')
+        .exec(function(err, category) {
 
-        if (err) {
-            res.send(err);
-        }else {
-            res.json(category);
-        }
-    });
+            if (err) {
+                res.send(err);
+            } else {
+                res.json(category);
+            }
+        });;
 };
 
 

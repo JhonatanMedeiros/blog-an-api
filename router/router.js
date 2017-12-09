@@ -24,6 +24,7 @@ module.exports = function(app) {
     const apiRoutes = express.Router();
     const authRoutes = express.Router();
     const admRoutes = express.Router();
+    const blogRoutes = express.Router();
     const profileRoutes = express.Router();
 
     //=========================
@@ -48,7 +49,7 @@ module.exports = function(app) {
 
 
     // Get Profile Info
-    profileRoutes.get('/me', requireAuth, ProfileController.userMe);
+    profileRoutes.get('/me/:userId', requireAuth, ProfileController.userMe);
 
     profileRoutes.put('/me', requireAuth, ProfileController.editMe);
 
@@ -89,6 +90,20 @@ module.exports = function(app) {
     admRoutes.delete('/category/:categoryId', requireAuth, CategoryController.deleteCategory);
 
     /* END Category Routes */
+
+
+
+    //=========================
+    // BLOG Routes
+    //=========================
+
+    apiRoutes.use('/blog', blogRoutes);
+
+
+    blogRoutes.get('/posts', PostController.getPosts);
+
+    blogRoutes.get('/post/:postUrl', PostController.getPostURL);
+
 
 
 
