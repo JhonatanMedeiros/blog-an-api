@@ -1,12 +1,12 @@
-const jwt = require('jsonwebtoken'),
-    crypto = require('crypto'),
-    User = require('../models/user'),
-    config = require('../config/main');
+const jwt = require('jsonwebtoken');
+
+const config = require('../config/main');
+
+const User = require('../models/user');
+
 
 function generateToken(user) {
-    return jwt.sign(user, config.secret, {
-        expiresIn: 10080 // in seconds
-    });
+    return jwt.sign(user, config.secret);
 }
 
 // Set user info from request
@@ -19,6 +19,7 @@ function setUserInfo(request) {
         role: request.role
     }
 }
+
 
 //========================================
 // Login Route
@@ -62,37 +63,13 @@ exports.login = function(req, res, next) {
 
             let userInfo = setUserInfo(user);
 
-            return res.status(201).json({
+            return res.status(200).json({
                 token: generateToken(userInfo),
                 user: userInfo
             });
         });
     });
 
-
-
-}
-
-
-//========================================
-// Token Route
-//========================================
-exports.token = function (req, res, next) {
-
-    const token = req.headers['authorization'];
-
-    if (!token)
-        return res.status(403).send({ auth: false, message: 'No token provided.' });
-
-    // verifies secret and checks exp
-    jwt.verify(token, config.secret, function(err, decoded) {
-
-        if (err) {
-            return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-        }
-
-        return res.status(200).send({ auth: true, message: 'Success to authenticate.' });
-    });
 };
 
 
@@ -156,11 +133,13 @@ exports.register = function(req, res, next) {
             });
         });
     });
-}
+};
+
 
 //========================================
 // Authorization Middleware
 //========================================
+
 
 // Role authorization check
 exports.roleAuthorization = function(role) {
