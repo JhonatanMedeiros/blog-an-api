@@ -2,17 +2,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
-const mongoose = require('mongoose');
+var mongoose = require('mongoose');
 
 const app = express();
 
 const config = require('./config/main');
+const utils = require('./lib/utils');
 
 const router = require('./router/router');
 
 mongoose.Promise = require('bluebird');
-// Database Connection
-mongoose.connect(config.database, { useMongoClient: true });
+mongoose = utils.connectToDatabase(mongoose, config.db);
 
 
 // Start the server

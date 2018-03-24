@@ -1,9 +1,14 @@
 module.exports = {
-    // Secret key for JWT signing and encryption
-    'secret': 'secretPassDifSecret&',
-    // Database connection information
-    // 'database': 'mongodb://localhost:27017/blog-database',
-    'database': 'mongodb://jhonatan:minhasenha123@ds249605.mlab.com:49605/db_blog_an',
-    // Setting port for server
-    'port': process.env.PORT || 5000
+  // Secret key for JWT signing and encryption
+  'secret': 'secretPassDifSecret&',
+  // Database connection information
+  'db': {
+    'USER': process.env.DBUSER || 'test',
+    'PASS': process.env.DBPASS || '123456',
+    'HOST': process.env.DBHOST || 'localhost',
+    'PORT': process.env.DBPORT || '27017',
+    'DATABASE': process.env.DBBASE || 'blog'
+  },
+  // Setting port for server
+  'port': process.env.PORT || 5000
 };
