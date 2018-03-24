@@ -95,3 +95,5 @@ typings/
 
 # dotenv environment variables file
 .env
+.babelrc
+!/bitbucket-pipelines.yml

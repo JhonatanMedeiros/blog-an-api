@@ -1,16 +1,16 @@
-const passport = require('passport');
-const express = require('express');
+'use strict';
+import express from 'express';
 
-const passportService = require('../config/passport');
+import initializePassaport from '../config/passport'
 
-const AuthenticationController = require('../controllers/authentication');
-const ProfileController = require('../controllers/profile');
-const PostController = require('../controllers/post');
-const CategoryController = require('../controllers/category');
-
+import AuthenticationController from '../controllers/authentication';
+import ProfileController from '../controllers/profile';
+import PostController from '../controllers/post';
+import CategoryController from '../controllers/category';
 
 // Middleware to require login/auth
-const requireAuth = passport.authenticate('jwt', { session: false });
+// const requireAuth = passport.authenticate('jwt', {session: false});
+const requireAuth = initializePassaport();
 
 // Constants for role types
 const REQUIRE_ADMIN = 'Admin';
@@ -18,101 +18,89 @@ const REQUIRE_OWNER = 'Owner';
 const REQUIRE_CLIENT = 'Client';
 const REQUIRE_MEMBER = 'Member';
 
-module.exports = function(app) {
+module.exports = function (app) {
 
-    // Initializing route groups
-    const apiRoutes = express.Router();
-    const authRoutes = express.Router();
-    const admRoutes = express.Router();
-    const blogRoutes = express.Router();
-    const profileRoutes = express.Router();
+  // Initializing route groups
+  const apiRoutes = express.Router();
+  const authRoutes = express.Router();
+  const admRoutes = express.Router();
+  const blogRoutes = express.Router();
+  const profileRoutes = express.Router();
 
-    //=========================
-    // Auth Routes
-    //=========================
+  //=========================
+  // Auth Routes
+  //=========================
 
-    // Set auth routes as subgroup/middleware to apiRoutes
-    apiRoutes.use('/auth', authRoutes);
+  // Set auth routes as subgroup/middleware to apiRoutes
+  apiRoutes.use('/auth', authRoutes);
 
-    // Registration route
-    authRoutes.post('/register', AuthenticationController.register);
+  // Registration route
+  authRoutes.post('/register', AuthenticationController.register);
 
-    // Login route
-    authRoutes.post('/login', AuthenticationController.login);
+  // Login route
+  authRoutes.post('/login', AuthenticationController.login);
 
+  //=========================
+  // Profile Routes
+  //=========================
 
-    //=========================
-    // Profile Routes
-    //=========================
+  apiRoutes.use('/profile', profileRoutes);
 
-    apiRoutes.use('/profile', profileRoutes);
+  // Get Profile Info
+  profileRoutes.get('/me/:userId', requireAuth, ProfileController.userMe);
 
+  profileRoutes.put('/me', requireAuth, ProfileController.editMe);
 
-    // Get Profile Info
-    profileRoutes.get('/me/:userId', requireAuth, ProfileController.userMe);
+  //=========================
+  // Adm Routes
+  //=========================
 
-    profileRoutes.put('/me', requireAuth, ProfileController.editMe);
+  apiRoutes.use('/adm', admRoutes);
 
+  /* Post Routes */
 
+  admRoutes.get('/posts', requireAuth, PostController.getPosts);
 
-    //=========================
-    // Adm Routes
-    //=========================
+  admRoutes.get('/post/:postId', requireAuth, PostController.getPost);
 
-    apiRoutes.use('/adm', admRoutes);
+  admRoutes.post('/post', requireAuth, PostController.createPost);
 
+  admRoutes.put('/post/:postId', requireAuth, PostController.editPost);
 
-    /* Post Routes */
+  admRoutes.delete('/post/:postId', requireAuth, PostController.delPost);
 
-    admRoutes.get('/posts', requireAuth, PostController.getPosts);
+  /* END Post Routes */
 
-    admRoutes.get('/post/:postId', requireAuth, PostController.getPost);
+  /* Category Routes */
 
-    admRoutes.post('/post', requireAuth, PostController.createPost);
+  admRoutes.get('/categories', requireAuth, CategoryController.getCategories);
 
-    admRoutes.put('/post/:postId', requireAuth, PostController.editPost);
+  admRoutes.get('/category/:categoryId', requireAuth, CategoryController.getCategory);
 
-    admRoutes.delete('/post/:postId', requireAuth, PostController.delPost);
+  admRoutes.post('/category', requireAuth, CategoryController.createCategory);
 
-    /* END Post Routes */
+  admRoutes.put('/category/:categoryId', requireAuth, CategoryController.editCategory);
 
+  admRoutes.delete('/category/:categoryId', requireAuth, CategoryController.deleteCategory);
 
-    /* Category Routes */
+  /* END Category Routes */
 
-    admRoutes.get('/categories', requireAuth, CategoryController.getCategories);
+  //=========================
+  // BLOG Routes
+  //=========================
 
-    admRoutes.get('/category/:categoryId', requireAuth, CategoryController.getCategory);
+  apiRoutes.use('/blog', blogRoutes);
 
-    admRoutes.post('/category', requireAuth, CategoryController.createCategory);
+  blogRoutes.get('/posts', PostController.getPosts);
 
-    admRoutes.put('/category/:categoryId', requireAuth, CategoryController.editCategory);
+  blogRoutes.get('/post/:postUrl', PostController.getPostURL);
 
-    admRoutes.delete('/category/:categoryId', requireAuth, CategoryController.deleteCategory);
+  app.get('/api', function (req, res, next) {
 
-    /* END Category Routes */
+    res.status(200).send('API works!');
 
+  });
 
-
-    //=========================
-    // BLOG Routes
-    //=========================
-
-    apiRoutes.use('/blog', blogRoutes);
-
-
-    blogRoutes.get('/posts', PostController.getPosts);
-
-    blogRoutes.get('/post/:postUrl', PostController.getPostURL);
-
-
-
-
-    app.get('/api', function (req, res, next) {
-
-        res.status(200).send('API works!');
-        
-    });
-
-    // Set url for API group routes
-    app.use('/api', apiRoutes);
+  // Set url for API group routes
+  app.use('/api', apiRoutes);
 };

@@ -1,90 +1,87 @@
-const Category = require('../models/category');
-
+'use strict';
+import Category from '../models/category';
 
 exports.getCategories = function (req, res, next) {
 
-    Category.find({}, function(err, post) {
-        if (err) {
-            res.send(err);
-        }else {
-            res.json(post);
-        }
-    });
+  Category.find({}, function (err, post) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(post);
+    }
+  });
 
 };
 
+exports.createCategory = function (req, res) {
 
-exports.createCategory = function(req, res) {
+  const categoryTitle = req.body.name;
 
-    const categoryTitle = req.body.name;
+  if (!categoryTitle) {
+    return res.status(422).send({error: 'Digite o Nome da Categoria!'});
+  }
 
-    if (!categoryTitle) {
-        return res.status(422).send({ error: 'Digite o Nome da Categoria!'});
+  Category.findOne({name: categoryTitle}, function (err, existingCategory) {
+
+    if (err) {
+      return next(err);
     }
 
+    if (existingCategory) {
+      return res.status(422).send({error: 'Já existe uma Categoria com esse nome!'});
+    }
 
-    Category.findOne({ name: categoryTitle }, function(err, existingCategory) {
+    var new_category = new Category(req.body);
 
-        if (err) {
-            return next(err);
-        }
+    new_category.save(function (err, category) {
+      if (err) {
+        res.send(err);
+      } else {
+        res.json(category);
+      }
+    });
 
-        if (existingCategory) {
-            return res.status(422).send({ error: 'Já existe uma Categoria com esse nome!' });
-        }
+  });
+};
 
-        var new_category = new Category(req.body);
+exports.getCategory = function (req, res) {
 
-        new_category.save(function(err, category) {
-            if (err) {
-                res.send(err);
-            }else {
-                res.json(category);
-            }
-        });
+  Category.findById(req.params.categoryId)
+    .populate('post')
+    .exec(function (err, category) {
 
+      if (err) {
+        res.send(err);
+      } else {
+        res.json(category);
+      }
+    });
+  ;
+};
+
+exports.editCategory = function (req, res) {
+
+  Category.findOneAndUpdate({_id: req.params.categoryId},
+    req.body, {
+      new: false
+    },
+    function (err, category) {
+      if (err) {
+        res.send(err);
+      } else {
+        res.json(category);
+      }
     });
 };
 
+exports.deleteCategory = function (req, res) {
 
-exports.getCategory = function(req, res) {
+  Category.remove({_id: req.params.categoryId}, function (err, category) {
 
-    Category.findById(req.params.categoryId)
-        .populate('post')
-        .exec(function(err, category) {
-
-            if (err) {
-                res.send(err);
-            } else {
-                res.json(category);
-            }
-        });;
-};
-
-
-exports.editCategory = function(req, res) {
-
-    Category.findOneAndUpdate({ _id: req.params.categoryId },
-        req.body,{
-            new: false
-        },
-        function(err, category) {
-            if (err) {
-                res.send(err);
-            } else {
-                res.json(category);
-            }
-        });
-};
-
-exports.deleteCategory = function(req, res) {
-
-    Category.remove({ _id: req.params.categoryId }, function(err, category) {
-
-        if (err) {
-            res.send(err);
-        }else {
-            res.json({ message: 'Category successfully deleted' });
-        }
-    });
+    if (err) {
+      res.send(err);
+    } else {
+      res.json({message: 'Category successfully deleted'});
+    }
+  });
 };
