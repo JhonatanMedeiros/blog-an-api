@@ -16,7 +16,7 @@ exports.getPosts = function (req, res, next) {
 
 exports.createPost = function (req, res) {
 
-  const postTitle = req.body.title;
+  const postTitle = slugify(req.body.title);
   const postTitleUrl = req.body.titleUrl;
   const postContent = req.body.content;
   const postAuthor = req.body.author;
@@ -43,31 +43,16 @@ exports.createPost = function (req, res) {
     return res.status(422).send({error: 'Digite o ID do Autor da Postagem!'});
   }
 
-  Post.findOne({titleUrl: postTitleUrl}, function (err, existingPost) {
+  let new_post = new Post(req.body);
+
+  new_post.save(function (err, post) {
     if (err) {
-      return next(err);
+      res.send(err);
+    } else {
+      res.json(post);
     }
+  });
 
-    if (existingPost) {
-      return res.status(422).send({error: 'Já existe uma Postagem com essa URL!'});
-    }
-
-    var new_post = new Post(req.body);
-
-    new_post.save(function (err, post) {
-      if (err) {
-        res.send(err);
-      } else {
-        res.json(post);
-      }
-    });
-
-  })
-    .populate('Category')
-    .exec(function (err, Category) {
-      if (err) console.log(err);
-      console.log(Category);
-    });
 };
 
 exports.getPost = function (req, res) {
@@ -118,3 +103,12 @@ exports.delPost = function (req, res) {
     }
   });
 };
+
+function slugify(text) {
+  return text.toString().toLowerCase()
+    .replace(/\s+/g, '-')        // Replace spaces with -
+    .replace(/[^\w\-]+/g, '')    // Remove all non-word chars
+    .replace(/\-\-+/g, '-')      // Replace multiple - with single -
+    .replace(/^-+/, '')          // Trim - from start of text
+    .replace(/-+$/, '');         // Trim - from end of text
+}
