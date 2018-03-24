@@ -3,11 +3,12 @@ import Post from '../models/post';
 
 exports.getPosts = function (req, res, next) {
 
-  Post.find({}, function (err, post) {
+  let query = Post.find({}).sort({'updatedAt': -1});
+  query.exec(function(err, blogPosts) {
     if (err) {
       res.send(err);
     } else {
-      res.json(post);
+      res.json(blogPosts);
     }
   });
 
