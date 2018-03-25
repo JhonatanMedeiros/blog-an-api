@@ -3,7 +3,11 @@ import Post from '../models/post';
 
 exports.getPosts = function (req, res, next) {
 
-  let query = Post.find({}).sort({'updatedAt': -1});
+  let query = Post.find({}).sort({'updatedAt': -1})
+    .populate({ path: 'category', select: 'name' })
+    .populate({ path: 'author', select: 'profile' });
+
+
   query.exec(function(err, blogPosts) {
     if (err) {
       res.send(err);
@@ -20,8 +24,8 @@ exports.createPost = function (req, res) {
   const postTitleUrl = req.body.titleUrl;
   const postContent = req.body.content;
   const postAuthor = req.body.author;
-  const postAuthorId = req.body.authorId;
   const category = req.body.category;
+  const comment = req.body.comment;
 
   if (!postTitle) {
     return res.status(422).send({error: 'Digite o Titulo da Postagem!'});
@@ -39,9 +43,6 @@ exports.createPost = function (req, res) {
     return res.status(422).send({error: 'Digite o nome do Autor da Postagem!'});
   }
 
-  if (!postAuthorId) {
-    return res.status(422).send({error: 'Digite o ID do Autor da Postagem!'});
-  }
 
   let new_post = new Post(req.body);
 
@@ -57,13 +58,18 @@ exports.createPost = function (req, res) {
 
 exports.getPost = function (req, res) {
 
-  Post.findById(req.params.postId, function (err, post) {
-    if (err) {
-      res.send(err);
-    } else {
-      res.json(post);
-    }
-  });
+
+  Post.findById(req.params.postId)
+    .populate({ path: 'category', select: 'name' })
+    .populate({ path: 'author', select: 'profile' })
+    .exec(function (err, post) {
+
+      if (err) {
+        res.send(err);
+      } else {
+        res.json(post);
+      }
+    });
 };
 
 exports.getPostURL = function (req, res) {
@@ -79,17 +85,24 @@ exports.getPostURL = function (req, res) {
 
 exports.editPost = function (req, res) {
 
-  Post.findOneAndUpdate({_id: req.params.postId},
+  Post.findOneAndUpdate(
+    {
+      _id: req.params.postId
+    },
     req.body, {
       new: false
-    },
-    function (err, post) {
-      if (err) {
-        res.send(err);
-      } else {
-        res.json(post);
-      }
-    });
+    })
+    .populate({ path: 'category', select: 'name' })
+    .populate({ path: 'author', select: 'profile' })
+    .exec(function (err, post) {
+
+        if (err) {
+          res.send(err);
+        } else {
+          res.json(post);
+        }
+
+      });
 };
 
 exports.delPost = function (req, res) {

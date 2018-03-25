@@ -1,12 +1,20 @@
 'use strict';
 import mongoose from 'mongoose';
 
+import Post from './post';
+
 const Schema = mongoose.Schema;
 
 const CategorySchema = new Schema({
     name: {
       type: String,
       required: 'Digite o nome da Categoria'
+    },
+    text: {
+      type: String,
+      required: 'Digite o nome da Categoria',
+      unique: true,
+      lowercase: true
     },
     posts: [{type: Schema.Types.ObjectId, ref: 'Post'}]
   },
