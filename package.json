@@ -13,10 +13,10 @@
   "description": "API Rest com Node.js, para o Sistema de Gerenciamento de Postagem. ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ./index.js --exec babel-node",
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "start": "babel-node ./index.js --preset=babel-preset-es2015",
+    "serve": "nodemon ./index.js --exec babel-node",
     "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
-    "serve": "node dist/index.js",
     "start_babel": "babel-node ./index.js --preset=babel-preset-es2015",
     "lint": "eslint ."
   },
