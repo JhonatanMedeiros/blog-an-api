@@ -18,6 +18,7 @@
     "serve": "nodemon ./index.js --exec babel-node",
     "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
     "start_babel": "babel-node ./index.js --preset=babel-preset-es2015",
+    "heroku-postbuild": "npm install",
     "lint": "eslint ."
   },
   "homepage": "https://jhonatanmedeiros.com",
