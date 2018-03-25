@@ -1,4 +1,7 @@
 'use strict';
+const { wrap: async } = require('co');
+
+import respond from '../utils/index'
 import Post from '../models/post';
 
 
@@ -7,22 +10,29 @@ import Post from '../models/post';
  * Get All Posts
  */
 
-exports.getPosts = function (req, res, next) {
+exports.getPosts = async (function* (req, res, next) {
 
-  let query = Post.find({}).sort({'updatedAt': -1})
-    .populate({ path: 'category', select: 'name' })
-    .populate({ path: 'author', select: 'profile' });
+  const queryPage = req.query.page || req.query.p;
+  const page = (queryPage > 0 ? queryPage : 1) - 1;
+  const limit = 20;
+  const options = {
+    limit: limit,
+    page: page
+  };
 
 
-  query.exec(function(err, blogPosts) {
-    if (err) {
-      res.send(err);
-    } else {
-      res.json(blogPosts);
-    }
+  const blogPosts = yield Post.list(options);
+  const total = yield Post.count();
+
+  respond(res, {
+    posts: blogPosts,
+    page: page + 1,
+    pages: Math.ceil(total / limit),
+    total: total,
+    limit: limit
   });
 
-};
+});
 
 
 /**
