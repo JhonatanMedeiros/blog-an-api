@@ -25,11 +25,11 @@ API URL [http://localhost:5000/](http://localhost:5000/)
 
 ## Creator
 
-**Jhonatan Medeiros**
+**Jhonatan Hardt de Medeiros**
 
 - <https://github.com/JhonatanMedeiros>
 - <https://jhonatanmedeiros.com>
 
-## Copyright
+## Copyright and License
 
-Code and documentation Copyright 2018 by Jhonatan Medeiros
+Code and documentation Copyright 2018 by Jhonatan Hardt de Medeiros. Code released under the [MIT License](https://github.com/JhonatanMedeiros/blog-an-api/blob/master/LICENSE).
