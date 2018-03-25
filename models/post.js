@@ -12,7 +12,8 @@ const PostSchema = new Schema({
     },
     titleUrl: {
       type: String,
-      required: 'Digite o titulo da URL da postagem'
+      required: 'Digite o titulo da URL da postagem',
+      unique: true
     },
     category: [{type: Schema.Types.ObjectId, ref: 'Category'}],
     comment: [{type: Schema.Types.ObjectId, ref: 'comment'}],
