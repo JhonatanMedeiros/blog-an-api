@@ -14,7 +14,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 0",
-    "start": "babel-node ./index.js --preset=babel-preset-es2015",
+    "start": "babel-node --presets es2015 ./index.js",
     "serve": "nodemon ./index.js --exec babel-node",
     "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
     "start_babel": "babel-node ./index.js --preset=babel-preset-es2015",
