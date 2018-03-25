@@ -3,11 +3,11 @@ import express from 'express';
 import bodyParser from 'body-parser';
 
 import morgan from 'morgan';
-import connectToDb from './db/connect';
-import router from './router/router';
+import connectToDb from './app/db/connect';
+import router from './app/router/router';
 
-import config from './config/main';
-import logger from './config/logger'
+import config from './app/config/main';
+import logger from './app/config/logger'
 
 const app = express();
 

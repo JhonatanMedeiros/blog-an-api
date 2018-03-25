@@ -1,7 +1,16 @@
 {
   "name": "server-api-blog",
   "version": "1.0.0",
-  "description": "",
+  "keywords": [
+    "nodejs",
+    "express",
+    "morgan",
+    "mongoose",
+    "passport",
+    "passport-jwt",
+    "babel"
+  ],
+  "description": "API Rest com Node.js, para o Sistema de Gerenciamento de Postagem. ",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,8 +20,13 @@
     "start_babel": "babel-node ./index.js --preset=babel-preset-es2015",
     "lint": "eslint ."
   },
+  "homepage": "https://jhonatanmedeiros.com",
   "author": "Jhonatan Hardt de Medeiros",
-  "license": "ISC",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JhonatanMedeiros/blog-an-api.git"
+  },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
@@ -49,5 +63,8 @@
     "env": {
       "mocha": true
     }
+  },
+  "engines": {
+    "node": ">=6"
   }
 }
