@@ -222,7 +222,7 @@ exports.delPost = function (req, res) {
     if (err || !post) {
       res.status(404).json({message: 'Não existe essa postagem!'});
     } else {
-      res.json({message: 'Post successfully deleted'});
+      res.json({message: 'Postagem removida com sucesso'});
     }
   });
 };

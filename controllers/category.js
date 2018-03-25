@@ -1,6 +1,12 @@
 'use strict';
 import Category from '../models/category';
 
+
+
+/**
+ * Get All Categories
+ */
+
 exports.getCategories = function (req, res, next) {
 
   let query = Category.find({}).sort({'name': 1})
@@ -15,6 +21,30 @@ exports.getCategories = function (req, res, next) {
   });
 
 };
+
+
+/**
+ * Get Sigle Category by Id
+ */
+
+exports.getCategory = function (req, res) {
+
+  Category.findById(req.params.categoryId)
+    .populate('posts')
+    .exec(function (err, category) {
+
+      if (err || !category) {
+        res.status(404).json({message: 'Não existe essa categoria!'});
+      } else {
+        res.json(category);
+      }
+    });
+};
+
+
+/**
+ * Create an Category
+ */
 
 exports.createCategory = function (req, res) {
 
@@ -51,19 +81,10 @@ exports.createCategory = function (req, res) {
   });
 };
 
-exports.getCategory = function (req, res) {
 
-  Category.findById(req.params.categoryId)
-    .populate('posts')
-    .exec(function (err, category) {
-
-      if (err) {
-        res.send(err);
-      } else {
-        res.json(category);
-      }
-    });
-};
+/**
+ * Edit an Category
+ */
 
 exports.editCategory = function (req, res) {
 
@@ -80,14 +101,19 @@ exports.editCategory = function (req, res) {
     });
 };
 
+
+/**
+ * Delete an Category
+ */
+
 exports.deleteCategory = function (req, res) {
 
   Category.remove({_id: req.params.categoryId}, function (err, category) {
 
-    if (err) {
-      res.send(err);
+    if (err || !category) {
+      res.status(404).json({message: 'Não existe essa categoria!'});
     } else {
-      res.json({message: 'Category successfully deleted'});
+      res.json({message: 'Categoria removida com sucesso!'});
     }
   });
 };
