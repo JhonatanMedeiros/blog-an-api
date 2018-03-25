@@ -1,29 +1,35 @@
-# README #
+# Blog Angular-Node API #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+API Rest com Node.js, para o Sistema de Gerenciamento de Postagem.
 
-### What is this repository for? ###
+## Requirements
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* [NodeJs](http://nodejs.org) >= 6.x 
+* [mongodb](http://mongodb.org)
 
-### How do I get set up? ###
+## Install
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+```sh
+$ git clone git@github.com:JhonatanMedeiros/blog-an-api.git
+$ npm install
+```
 
-### Contribution guidelines ###
 
-* Writing tests
-* Code review
-* Other guidelines
 
-### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+```sh
+$ npm start
+```
+
+API URL [http://localhost:5000/](http://localhost:5000/)
+
+## Creator
+
+**Jhonatan Medeiros**
+
+- <https://github.com/JhonatanMedeiros>
+- <https://jhonatanmedeiros.com>
+
+## Copyright
+
+Code and documentation Copyright 2018 by Jhonatan Medeiros
