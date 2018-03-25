@@ -4,7 +4,7 @@ import path from 'path';
 
 let config = {
   // Secret key for JWT signing and encryption
-  'secret': 'secretPassDifSecret&',
+  'secret': process.env.secretPass ||'secretPassDifSecret&',
   // Log
   'logFileDir': path.join(__dirname, '../../log'),
   'logFileName': 'app.log',

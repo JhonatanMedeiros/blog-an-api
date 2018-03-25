@@ -1,5 +1,6 @@
 'use strict';
 import mongoose from 'mongoose';
+
 import Category from '../models/post';
 
 const Schema = mongoose.Schema;
@@ -14,6 +15,7 @@ const PostSchema = new Schema({
       required: 'Digite o titulo da URL da postagem'
     },
     category: [{type: Schema.Types.ObjectId, ref: 'Category'}],
+    comment: [{type: Schema.Types.ObjectId, ref: 'comment'}],
     content: {
       type: String,
       required: 'Digite o conteudo da postagem'
@@ -21,14 +23,7 @@ const PostSchema = new Schema({
     imgUrl: {
       type: String
     },
-    author: {
-      type: String,
-      required: 'Digite o Author'
-    },
-    authorId: {
-      type: String,
-      required: 'Digite o Id do Author'
-    },
+    author: { type: Schema.Types.ObjectId, ref: 'User'}
   },
   {
     timestamps: true

@@ -3,7 +3,10 @@ import Category from '../models/category';
 
 exports.getCategories = function (req, res, next) {
 
-  Category.find({}, function (err, post) {
+  let query = Category.find({}).sort({'name': 1})
+    .populate('posts');
+
+  query.exec(function(err, post) {
     if (err) {
       res.send(err);
     } else {
@@ -21,7 +24,7 @@ exports.createCategory = function (req, res) {
     return res.status(422).send({error: 'Digite o Nome da Categoria!'});
   }
 
-  Category.findOne({name: categoryTitle}, function (err, existingCategory) {
+  Category.findOne({text: categoryTitle.toLowerCase()}, function (err, existingCategory) {
 
     if (err) {
       return next(err);
@@ -31,7 +34,11 @@ exports.createCategory = function (req, res) {
       return res.status(422).send({error: 'Já existe uma Categoria com esse nome!'});
     }
 
-    var new_category = new Category(req.body);
+
+    let new_category = new Category({
+      name: categoryTitle,
+      text: categoryTitle
+    });
 
     new_category.save(function (err, category) {
       if (err) {
@@ -47,7 +54,7 @@ exports.createCategory = function (req, res) {
 exports.getCategory = function (req, res) {
 
   Category.findById(req.params.categoryId)
-    .populate('post')
+    .populate('posts')
     .exec(function (err, category) {
 
       if (err) {
@@ -56,7 +63,6 @@ exports.getCategory = function (req, res) {
         res.json(category);
       }
     });
-  ;
 };
 
 exports.editCategory = function (req, res) {
