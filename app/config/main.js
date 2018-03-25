@@ -6,7 +6,7 @@ let config = {
   // Secret key for JWT signing and encryption
   'secret': process.env.secretPass ||'secretPassDifSecret&',
   // Log
-  'logFileDir': path.join(__dirname, '../.log'),
+  'logFileDir': path.join(__dirname, '../../.log'),
   'logFileName': 'app.log',
   // Database connection information
   'db': {

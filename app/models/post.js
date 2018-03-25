@@ -1,7 +1,7 @@
 'use strict';
 import mongoose from 'mongoose';
 
-import Category from '../models/post';
+import Category from './post';
 
 const Schema = mongoose.Schema;
 
