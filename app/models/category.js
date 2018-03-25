@@ -13,7 +13,6 @@ const CategorySchema = new Schema({
     text: {
       type: String,
       required: 'Digite o nome da Categoria',
-      unique: true,
       lowercase: true
     },
     posts: [{type: Schema.Types.ObjectId, ref: 'Post'}]
