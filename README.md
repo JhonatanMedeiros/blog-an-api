@@ -1,5 +1,7 @@
 # Blog Angular-Node API #
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/JhonatanMedeiros/blog-an-api.svg)](https://greenkeeper.io/)
+
 API Rest com Node.js, para o Sistema de Gerenciamento de Postagem.
 
 ## Requirements
