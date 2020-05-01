@@ -19,7 +19,9 @@
     "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
     "start_babel": "babel-node ./index.js --preset=babel-preset-es2015",
     "heroku-postbuild": "npm install",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "homepage": "https://jhonatanmedeiros.com",
   "author": "Jhonatan Hardt de Medeiros",
@@ -38,7 +40,8 @@
     "passport": "^0.4.0",
     "passport-jwt": "^3.0.0",
     "winston": "^2.4.1",
-    "winston-daily-rotate-file": "^3.0.1"
+    "winston-daily-rotate-file": "^3.0.1",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -68,5 +71,6 @@
   },
   "engines": {
     "node": ">=6"
-  }
+  },
+  "snyk": true
 }
